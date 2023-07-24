@@ -1,0 +1,59 @@
+<%- include('partials/header') -%>
+	<body>
+		<h1>My Cart</h1>
+ 
+        <section class="border border-dark my-3 d-flex flex-column">
+		<% for(i=0; i<items.length; i++) { %>
+            <% for(j=0;j<listing.length; j++) { %>
+            <% if (listing[j].equals(items[i].item)) { %>
+            <section class="border border-dark my-3 d-flex flex-column d-sm-flex flex-sm-row flex-sm-wrap">
+            <div class="text-center flex-basis-70 flex-grow-1" style="height: 300px;">
+                <a href="/marketMain/getListing/<%=items[i].item%>">
+                <img class="object-fit-contain" style="width: 100%; height:90%; " src="<%=items[i].image %>" alt="listings images">
+                <span><%=items[i].itemName %></span>
+                </a>
+            </div>
+                <section class="d-flex flex-column flex-basis-25">
+                    <div class="d-flex flex-row justify-content-around align-items-center flex-basis-85">
+                    <form class="flex-basis-33" action="/marketMainCart/reduceItemQty/<%=items[i].item%>?_method=PUT" method="POST">
+                    <button class="mx-3 fa fa-minus fa-2x" aria-hidden="true"></button>
+                    </form>
+                    <span class="flex-basis-33" style="font-size: 35px;">Quantity:<%=items[i].quantity %></span>
+                    <form class="flex-basis-33" action="/marketMainCart/addItemQty/<%=items[i].item%>?_method=PUT" method="POST">
+                    <button class="mx-3 fa fa-plus fa-2x" aria-hidden="true"></button>
+                    </form>
+                    </div>
+                <div class="my-3 d-flex flex-column flex-grow-1">
+                    <form action="/marketMainCart/purchaseItem/<%=items[i].item%>" method="POST">
+                        <form action="/marketMain/refreshStockQty/<%=items[i].item%>?_method=PUT" method="POST">
+                    <button class="flex-grow-1">Purchase</button>
+                    </form>
+                    </form>
+                    <form class="align-self-center" action="/marketMainCart/deletefromCart/<%=items[i].item%>?_method=DELETE" method="POST"><button style="size: 30px;" class="fa fa-trash fa-2x" aria-hidden="true"></button>
+                    </form>
+                </div>
+                </section>
+            </section>
+            <% }else {%>
+                <section class="border border-dark my-3 d-flex flex-column d-md-flex flex-md-row flex-md-wrap">
+                    <div class="text-center flex-basis-75" style="height: 300px;">
+                        <img class="object-fit-contain" style="width: 100%; height:90%; " src="<%=items[i].image %>" alt="listings images">
+                        <span><%=items[i].itemName %></span>
+                    </div>
+                        <section class="d-flex flex-column flex-basis-25">
+                            <div class="d-flex flex-row align-items-center flex-basis-75">
+                            <p style="font-size: 30px;">This listing has been removed by the original poster</p>
+                            </div>
+                        <div class="my-3 d-flex flex-column flex-grow-1 align-items-center">
+                            <form action="/marketMainCart/deletefromCart/<%=items[i].item%>?_method=DELETE" method="POST"><button style="size: 30px;" class="fa fa-trash fa-4x" aria-hidden="true"></button>
+                            </form>
+                        </div>
+                        </section>
+                    </section>
+            <% } %>
+            <% } %>
+        <% } %>
+        </section>
+	</body>
+</html>
+<%- include('partials/footer') -%>

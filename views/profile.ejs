@@ -1,0 +1,40 @@
+<%- include('partials/header') -%>
+	<body>
+        
+		<h1>User Profile</h1>
+
+        <section class="d-flex flex-row">
+        <h2><%=user.userName%></h2>
+        <% if (user._id==currUser.id) { %>
+        <button class="mx-3"><a href="/marketMainCart">My Cart</a></button>
+        <% } %>
+        </section> 
+
+        <section class="my-5">
+        <% if (user._id==currUser.id) { %>
+        <form action="/marketMain/createListing" enctype="multipart/form-data" method="POST">
+            <h3>Item Name: <input type="text" name="itemName" placeholder="Key in to-be-listed item name"></h3>
+            <h3>Upload image: <input type="file" name="file"></h3>
+            <h3>Item Description: <textarea class="ms-3" name="itemDesc" id="itemDesc"></textarea></h3>
+            <h3>Price: <input type="text" name="itemPrice"></h3>
+            <h3>Stock: <input type="text" name="itemStock"></h3>
+            <button>Submit listing</button>
+        </form>
+        <% } %>
+         </section>
+
+        <section>
+        <h2>Items currently listed:</h2>
+        <div class="d-flex flex-column d-sm-flex flex-sm-row flex-sm-wrap">
+        <% for(i=0; i<items.length; i++) { %>
+            <a class="border border-dark text-center flex-basis-33" style="height: 300px;" href="/marketMain/getListing/<%=items[i]._id%>">
+                <img class="object-fit-contain" style="width: 100%; height: 90%;" src="<%=items[i].image %>" alt="listings images">
+                <span><%=items[i].itemName %></span>
+            </a>
+            <% } %>
+        </div>
+    </section>
+
+	</body>
+</html>
+<%- include('partials/footer') -%>

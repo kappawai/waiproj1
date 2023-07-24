@@ -1,0 +1,28 @@
+<%- include('partials/header') -%>
+	<body>
+
+		<% if (locals.messages.success) { %>
+			<% messages.success.forEach( el => { %>
+				<div class="alert alert-success"><%= el.msg %></div>
+			<% }) %>    
+		<% } %>
+		<h1>Market.Inc</h1>
+		<h2>Welcome <span><%= user.userName %></span></h2>
+        <a href="*">Categories</a>
+		<a href="*">Promotions</a>
+		<a href="*">Vouchers</a>
+		<a href="/marketMain/profile/<%=user._id%>">My Profile</a>
+
+		<a href="/logout">Logout</a>
+		
+		<section class=" my-3 d-flex flex-column d-sm-flex flex-sm-row flex-sm-wrap justify-content-around">
+		<% for(i=0; i<items.length; i++) { %>
+            <a class="border border-dark text-center flex-basis-45" style="height: 300px;" href="/marketMain/getListing/<%=items[i]._id%>">
+                <img class="object-fit-contain" style="width: 100%; height:90%; " src="<%=items[i].image %>" alt="listings images">
+                <span><%=items[i].itemName %></span>
+            </a>
+            <% } %>
+		</section>	
+	</body>
+</html>
+<%- include('partials/footer') -%>
